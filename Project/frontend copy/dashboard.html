@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - Interview Prep</title>
+  <link rel="stylesheet" href="dashboard.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="logo">
+      <div class="logo-circle">IP</div>
+      <h2>Interview Prep</h2>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#" class="active">🏠 Dashboard</a></li>
+        <li><a href="preparation.html" >🎯 Preparation</a></li>
+        <li><a href="#">👤 Profile</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- MAIN SECTION -->
+  <main class="dashboard">
+    <section class="welcome-section">
+      <div class="welcome-text">
+        <h1>👋 Welcome <span id="UserName"></span></h1>
+        <p>Let's set up your interview preparation journey.</p>
+        <h1 id="loading_btn" style="display: none;color:red">Loading.....</h1>
+        
+      </div>
+      <div class="welcome-img">
+        <img src="image.jpeg" alt="Interview preparation illustration" />
+      </div>
+    </section>
+
+    <!-- 3 MAIN CARDS -->
+    <section class="cards-section">
+      <div class="card">
+        <div class="icon">📄</div>
+        <h3>Upload Resume</h3>
+        <p>Upload your resume (PDF/DOC) to extract skills and experience.</p>
+        <div><input type="file" name="Resume" id="resume"></div>
+        <!-- <button class="btn-primary">Upload Resume</button> -->
+      </div>
+
+      <div class="card">
+        <div class="icon">💼</div>
+        <h3>Add Company & Job Role</h3>
+        <!-- <p>Enter your target company and job title to get relevant questions.</p> -->
+        <div><input type="text" name="company" placeholder="Enter Company Name" id="company" class="job-details"></div>
+        <div><input type="text" name="role" id="role" placeholder="Enter Job Role" class="job-details"></div>
+        <!-- <button class="btn-primary">Add Details</button> -->
+      </div>
+
+      <div class="card">
+        <div class="icon">🧠</div>
+        <h3>Generate AI Questions</h3>
+        <p>AI will create technical and HR questions tailored to your profile.</p>
+        <button class="btn-primary" type="button" onclick="generate()">Generate Questions</button>
+      </div>
+    </section>
+
+
+</body>
+</html>
+<script src="dashboard.js"></script>

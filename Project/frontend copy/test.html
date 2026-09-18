@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skill & Project Preparation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+      color: #333;
+    }
+
+    header {
+      background: #007bff;
+      color: white;
+      padding: 15px 0;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      background: #e0e0e0;
+    }
+
+    .tabs div {
+      padding: 12px 25px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background 0.3s;
+    }
+
+    .tabs div:hover {
+      background: #d0d0d0;
+    }
+
+    .tabs .active {
+      background: #007bff;
+      color: white;
+    }
+
+    .section {
+      display: none;
+      padding: 30px;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .container {
+      display: flex;
+      gap: 20px;
+      margin-top: 15px;
+    }
+
+    .left {
+      width: 30%;
+      border-right: 2px solid #ccc;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    .right {
+      width: 70%;
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    .left div {
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .left div:hover {
+      background: #f0f0f0;
+    }
+
+    .left .active {
+      background: #007bff;
+      color: white;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    h3 {
+      color: #007bff;
+    }
+
+    p {
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <header>My Preparation Portal</header>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <div class="tab active">Home</div>
+    <div class="tab">Skills</div>
+    <div class="tab">Projects</div>
+    <div class="tab">About</div>
+  </div>
+
+  <!-- Sections -->
+  <div class="section active" id="home">
+    <h2>Welcome!</h2>
+    <p>This is your preparation dashboard. Use the tabs above to explore skills and projects, and prepare for interviews effectively.</p>
+  </div>
+
+  <!-- Skills Section -->
+  <div class="section" id="skills-section">
+    <h2>Skills</h2>
+    <div class="container">
+      <div class="left" id="skills-list"></div>
+      <div class="right" id="skills-content">
+        <p>Click on any skill to display questions and start preparation.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Projects Section -->
+  <div class="section" id="projects-section">
+    <h2>Projects</h2>
+    <div class="container">
+      <div class="left" id="projects-list"></div>
+      <div class="right" id="projects-content">
+        <p>Click on any project to view related questions.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- About Section -->
+  <div class="section" id="about">
+    <h2>About</h2>
+    <p>This platform helps you revise your technical skills and project-related interview questions quickly and efficiently.</p>
+  </div>
+
+  <script>
+    // ===== Tabs =====
+    const tabs = document.querySelectorAll(".tab");
+    const sections = document.querySelectorAll(".section");
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener("click", () => {
+        tabs.forEach(t => t.classList.remove("active"));
+        sections.forEach(s => s.classList.remove("active"));
+        tab.classList.add("active");
+        sections[index].classList.add("active");
+      });
+    });
+
+    // ======= Skills Data =======
+    const skills = [
+      { 
+        name: "JavaScript", 
+        questions: [
+          "What is event bubbling?",
+          "Explain closures in JavaScript.",
+          "Difference between var, let and const?"
+        ]
+      },
+      { 
+        name: "Python", 
+        questions: [
+          "What are Python decorators?",
+          "Explain list comprehension.",
+          "What is GIL (Global Interpreter Lock)?"
+        ]
+      },
+      {
+        name: "C++",
+        questions: [
+          "What is a virtual function?",
+          "Explain constructor overloading.",
+          "What is the use of the 'this' pointer?"
+        ]
+      },
+      {
+        name: "React",
+        questions: [
+          "What is the virtual DOM?",
+          "Explain the concept of hooks.",
+          "What is the difference between state and props?"
+        ]
+      }
+    ];
+
+    // ======= Projects Data =======
+    const projects = [
+      { 
+        name: "Exam Management App", 
+        questions: [
+          "How does the login system work?",
+          "Explain how you used SQLite database.",
+          "How are roles (Student, Teacher, Admin) managed?"
+        ]
+      },
+      {
+        name: "Flappy Bird Game",
+        questions: [
+          "Which library did you use for rendering?",
+          "How do you handle collisions?",
+          "How is the score maintained?"
+        ]
+      },
+      {
+        name: "AgroBot V2",
+        questions: [
+          "Which sensors are used for soil moisture detection?",
+          "How does the robot decide when to water crops?",
+          "Explain how autonomous movement is achieved."
+        ]
+      }
+    ];
+
+    // ======= Skills Section Logic =======
+    const skillsList = document.getElementById("skills-list");
+    const skillsContent = document.getElementById("skills-content");
+
+    skills.forEach((skill) => {
+      const div = document.createElement("div");
+      div.textContent = skill.name;
+
+      div.addEventListener("click", () => {
+        document.querySelectorAll("#skills-list div").forEach(el => el.classList.remove("active"));
+        div.classList.add("active");
+
+        skillsContent.innerHTML = `
+          <h3>${skill.name} Questions</h3>
+          <ul>${skill.questions.map(q => `<li>${q}</li>`).join("")}</ul>
+        `;
+      });
+
+      skillsList.appendChild(div);
+    });
+
+    // ======= Projects Section Logic =======
+    const projectsList = document.getElementById("projects-list");
+    const projectsContent = document.getElementById("projects-content");
+
+    projects.forEach((project) => {
+      const div = document.createElement("div");
+      div.textContent = project.name;
+
+      div.addEventListener("click", () => {
+        document.querySelectorAll("#projects-list div").forEach(el => el.classList.remove("active"));
+        div.classList.add("active");
+
+        projectsContent.innerHTML = `
+          <h3>${project.name} Related Questions</h3>
+          <ul>${project.questions.map(q => `<li>${q}</li>`).join("")}</ul>
+        `;
+      });
+
+      projectsList.appendChild(div);
+    });
+  </script>
+</body>
+</html>

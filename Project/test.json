@@ -1,0 +1,18 @@
+{
+  "Programming Languages": ["C", "C++", "C#", "Java", "JavaScript", "Python"],
+  "Frameworks & Libraries": [
+    "EJS",
+    "Node.js",
+    ".NET Framework",
+    "ADO.NET",
+    "Express.js",
+    "WinForms",
+    "HTML",
+    "CSS"
+  ],
+  "Databases": ["MySQL", "MongoDB", "Oracle Database"],
+  "Cloud & DevOps": [],
+  "Tools & Platforms": [],
+  "AI / Machine Learning": [],
+  "Others": ["Data Structures & Algorithms", "Agile"]
+}

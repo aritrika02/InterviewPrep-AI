@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interview Prep</title>
+  <link rel="stylesheet" href="style.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">
+      <div class="logo-circle">IP</div>
+      <h2>Interview Prep</h2>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#" id="homeLink">🏠 Home</a></li>
+        <li><a href="#">👤 About Us</a></li>
+        <li><button id="getStartedBtn" class="btn-primary">Get Started</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section id="homeSection" class="hero">
+      <!-- LEFT SIDE -->
+      <div id="leftContent" class="hero-content">
+        <div id="heroBoxes">
+          <h1>YOUR SMART PATH TO<br />CRACKING EVERY INTERVIEW</h1>
+          <p>(INTERVIEW CONFIDENCE, POWERED BY AI !)</p>
+
+          <div class="features">
+            <div class="feature-box">
+              <div class="icon">📄</div>
+              <h3>UPLOAD RESUME</h3>
+              <p>GET TAILORED QUESTIONS BASED ON YOUR RESUME</p>
+            </div>
+            <div class="feature-box">
+              <div class="icon">📊</div>
+              <h3>COMPANY INSIGHT QNA</h3>
+              <p>UNDERSTAND COMPANY POLICY AND CULTURE</p>
+            </div>
+            <div class="feature-box">
+              <div class="icon">💼</div>
+              <h3>MOCK INTERVIEW</h3>
+              <p>PRACTICE WITH AI IN A SIMULATED INTERVIEW</p>
+            </div>
+          <button id="getStartedBtn1" class="btn-primary">Get Started</button>
+          </div>
+        </div>
+
+        <!-- LOGIN / REGISTER FORM (hidden by default) -->
+        <div id="authForms" class="auth-container hidden">
+          <div class="auth-tabs">
+            <button id="loginTab" class="tab active">Login</button>
+            <button id="registerTab" class="tab">Register</button>
+          </div>
+
+          <div id="loginForm" class="form active">
+            <h2>Welcome Back 👋</h2>
+            <input type="email" placeholder="Email" required id="Lemail"/>
+            <input type="password" placeholder="Password" required id="Lpassword"/>
+            <button class="btn-primary" onclick="login()">Login</button>
+          </div>
+
+          <div id="registerForm" class="form">
+            <h2>Create Account 📝</h2>
+            <!-- <form action=""> -->
+            <input type="text" placeholder="Full Name" required id="name" />
+            <input type="email" placeholder="Email" required id="email"/>
+            <input type="password" placeholder="Password" required  id="password"/>
+            <button class="btn-primary" onclick="register()">Register</button>
+            <!-- </form> -->
+          </div>
+
+          <button id="backBtn" class="btn-secondary">⬅ Back</button>
+        </div>
+      </div>
+
+      <!-- RIGHT SIDE IMAGE -->
+      <div class="hero-image">
+        <img src="job.jpg" alt="Interview illustration" />
+        <p class="caption">FROM RESUME TO RESULT - WE'VE GOT YOU COVERED</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

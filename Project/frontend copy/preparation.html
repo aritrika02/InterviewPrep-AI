@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Preparation - Interview Prep</title>
+  <link rel="stylesheet" href="preparation.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="logo">
+      <div class="logo-circle">IP</div>
+      <h2>Interview Prep</h2>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="dashboard.html">🏠 Dashboard</a></li>
+        <li><a href="#" class="active">🎯 Preparation</a></li>
+        <li><a href="#">👤 Profile</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- TOGGLE BUTTONS -->
+  <div class="prep-tabs">
+    <button class="tab active" id="skillTab">🧠 Skill Preparation</button>
+    <button class="tab" id="projectTab">💼 Project Preparation</button>
+    <button class="tab" id="companyTab">🏢 Company-Specific</button>
+  </div>
+
+  <!-- MAIN CONTENT AREA -->
+  <main class="prep-content">
+    <!-- SKILL PREPARATION SECTION -->
+    <section id="skillPrep" class="prep-section active">
+      <div class="prep-layout">
+        <div class="left-panel">
+          <h3>Skills</h3>
+          <ul id="skillList"></ul>
+        </div>
+
+        <div class="right-panel" id="skillContent">
+          <p class="placeholder-text">
+            Click on any skill to display questions and start preparation.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECT PREPARATION SECTION -->
+    <section id="projectPrep" class="prep-section">
+      <div class="prep-layout">
+        <div class="left-panel">
+          <h3>Projects</h3>
+          <ul id="projectList"></ul>
+        </div>
+
+        <div class="right-panel" id="projectContent">
+          <p class="placeholder-text">
+            Click on any project to view related questions.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPANY SPECIFIC SECTION -->
+    <section id="companyPrep" class="prep-section">
+      <h2>🏢 Company-Specific</h2>
+      <p>Get company-specific interview questions and culture insights.</p>
+      <div class="placeholder">[Content for Company-Specific Preparation]</div>
+    </section>
+  </main>
+
+  <script src="preparation.js"></script>
+</body>
+</html>
