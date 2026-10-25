@@ -10,10 +10,8 @@ app.use(express.json())
 app.get("/", (req, res) => res.send("InterviewPrep API is running"))
 app.use("/", router)
 
-const PORT = process.env.PORT || 2000
-app.listen(PORT, () => {
-    console.log("server is starting on " + PORT)
-})
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log("Server running on port " + PORT));
 
 
 
