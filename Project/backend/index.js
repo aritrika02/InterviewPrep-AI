@@ -1,17 +1,36 @@
-const express=require("express")
-let {router}=require("./routes/AllRoutes")
-const cors=require("cors")
+const express = require("express")
+const cors = require("cors")
+let { router } = require("./routes/AllRoutes")
 
-let app=express()
+let app = express()
 
-
-
-app.use(cors())
+app.use(cors({ origin: process.env.FRONTEND_URL || "*" }))
 app.use(express.json())
 
-app.use("/",router)
+app.get("/", (req, res) => res.send("InterviewPrep API is running"))
+app.use("/", router)
 
-
-app.listen(2000,()=>{
-    console.log("server is starting")
+const PORT = process.env.PORT || 2000
+app.listen(PORT, () => {
+    console.log("server is starting on " + PORT)
 })
+
+
+
+// const express=require("express")
+// let {router}=require("./routes/AllRoutes")
+// const cors=require("cors")
+
+// let app=express()
+
+
+
+// app.use(cors())
+// app.use(express.json())
+
+// app.use("/",router)
+
+
+// app.listen(2000,()=>{
+//     console.log("server is starting")
+// })
