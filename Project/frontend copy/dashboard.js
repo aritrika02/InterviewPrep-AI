@@ -1,62 +1,55 @@
+const API_URL = "https://interviewprep-ai-77at.onrender.com"; // change to your Render URL after deploying
 
-
-async function validate(){
-    // console.log("hello bhai")
-    let token=localStorage.getItem("token")
-    let res=await fetch("http://localhost:2000/validate",{
-        headers:{"auth":"bearer "+token}
+async function validate() {
+    let token = localStorage.getItem("token")
+    let res = await fetch(API_URL + "/validate", {
+        headers: { "auth": "bearer " + token }
     })
-    let data=await res.json()
-    
-    if(data.status!="Ok"){
-        alert("Login Again")
-        console.log("Login again")
-        window.location.href="HomePage.html"
-    }
-    console.log(data)
-    // UsersName=data.user.name
-    document.getElementById("UserName").innerHTML=data.user.name;
+    let data = await res.json()
 
+    if (data.status != "Ok") {
+        alert("Login Again")
+        window.location.href = "HomePage.html"
+        return
+    }
+    document.getElementById("UserName").innerHTML = data.user.name
 }
 validate()
 
+async function generate() {
+    document.getElementById("loading_btn").style.display = "block"
+    let token = localStorage.getItem("token")
+    let file = document.getElementById("resume").files[0]
+    let company = document.getElementById("company").value
+    let role = document.getElementById("role").value
 
-async function generate(){
-    // console.log("data")
-    document.getElementById("loading_btn").style.display="block"
-    let token=localStorage.getItem("token")
-    let file=document.getElementById("resume").files[0]
-    let company=document.getElementById("company").value
-    let role=document.getElementById("role").value
- 
-    if(!file || !company ||!role){
+    if (!file || !company || !role) {
         alert("fill all fields")
-        return;
+        document.getElementById("loading_btn").style.display = "none"
+        return
     }
-    const formData = new FormData();
-    formData.append("resume", file);
-    formData.append("company",company)
-    formData.append("role",role)
+    const formData = new FormData()
+    formData.append("resume", file)
+    formData.append("company", company)
+    formData.append("role", role)
 
-    let res=await fetch("http://localhost:2000/generate",{
-        method:"POST",
-        headers:{"auth":"bearer "+token},
-        body:formData
+    let res = await fetch(API_URL + "/generate", {
+        method: "POST",
+        headers: { "auth": "bearer " + token },
+        body: formData
     })
-    let data=await res.json()
-    // console.log(data)
-    // alert(data.status)
-    if(data.status!="Ok"){
+    let data = await res.json()
+
+    if (data.status != "Ok") {
         alert("Login Again")
-        // console.log("Login again")
-        window.location.href="HomePage.html"
+        window.location.href = "HomePage.html"
+        return
     }
-    if(data.message!="sucess"){
+    if (data.message != "sucess") {
+        document.getElementById("loading_btn").style.display = "none"
         alert("server is busy try again")
-    }
-    else{
-         document.getElementById("loading_btn").display="none"
-        window.location.href="preparation.html"
+    } else {
+        document.getElementById("loading_btn").style.display = "none"
+        window.location.href = "preparation.html"
     }
 }
-// console.log(UsersName)
