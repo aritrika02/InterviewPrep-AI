@@ -1,5 +1,5 @@
 //const API_URL = "https://interviewprep-ai-77at.onrender.com";// change to your Render URL after deploying
-const API_URL = "http://localhost:5000";
+const API_URL = "https://interviewprep-ai-77at.onrender.com";
 
 document.addEventListener("DOMContentLoaded", () => {
   const heroBoxes = document.getElementById("heroBoxes");

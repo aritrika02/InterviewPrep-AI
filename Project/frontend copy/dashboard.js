@@ -1,5 +1,5 @@
 
-const API_URL = "http://localhost:5000";
+const API_URL = "https://interviewprep-ai-77at.onrender.com";
 
 // Validate user authentication
 async function validate() {
