@@ -1,168 +1,25 @@
-// // --- TAB SWITCHING (Skill / Project / Company) ---
-// const tabs = document.querySelectorAll(".tab");
-// const sections = document.querySelectorAll(".prep-section");
 
-// tabs.forEach((tab, index) => {
-//   tab.addEventListener("click", () => {
-//     tabs.forEach(t => t.classList.remove("active"));
-//     sections.forEach(s => s.classList.remove("active"));
-//     tab.classList.add("active");
-//     sections[index].classList.add("active");
-//   });
-// });
+const API_URL = "https://interviewprep-ai-77at.onrender.com";
 
-// // === ELEMENTS ===
-// const skillList = document.getElementById("skillList");
-// const skillContent = document.getElementById("skillContent");
+// ================================
+// AUTHENTICATION
+// ================================
 
-// // ✅ FETCH SKILLS FROM API
-// async function fetchSkills() {
-//     let token=localStorage.getItem("token")
-//   try {
-//     const res = await fetch("https://interviewprep-ai-77at.onrender.com/skills",{  
-//           // Headers:{"auth":"bearer "+token}
-//           headers:{"auth":"bearer "+token}
-//     });
-//     if (!res.ok) throw new Error("Failed to load skills");
-//     const data= await res.json();
-//     const skills=data.skills
+const token = localStorage.getItem("token");
 
+if (!token) {
+  alert("Please login first.");
+  window.location.href = "HomePage.html";
+}
 
-//     if(data.status!="Ok"){
-//         alert("Login Again")
-//         // console.log("Login again")
-//         window.location.href="HomePage.html"
-//     }
+const authHeaders = {
+  auth: "bearer " + token
+};
 
-//     // const skills =["javascript","htmll","css"]
-//     // Clear old content
-//     skillList.innerHTML = "";
+// ================================
+// TAB SWITCHING
+// ================================
 
-//     if (!skills || skills.length === 0) {
-//       skillList.innerHTML = `<p>No skills found.</p>`;
-//       return;
-//     }
-
-//     // Create list items dynamically
-//     skills.forEach(skill => {
-//       const li = document.createElement("li");
-//       li.classList.add("skill-item");
-//       li.textContent = skill.name || skill; // handle string or object
-
-//       li.addEventListener("click", () => {
-//         document.querySelectorAll(".skill-item").forEach(el => el.classList.remove("active"));
-//         li.classList.add("active");
-//         fetchQuestions(li.textContent);
-//       });
-
-//       skillList.appendChild(li);
-//     });
-//   } catch (error) {
-//     console.error(error);
-//     skillList.innerHTML = `<p>Error loading skills.</p>`;
-//   }
-// }
-
-// // ✅ FETCH QUESTIONS FOR SELECTED SKILL
-// async function fetchQuestions(skillName) {
-//    let token=localStorage.getItem("token")
-//   try {
-//     skillContent.innerHTML = `<p>Loading questions for <b>${skillName}</b>...</p>`;
-
-//     const res = await fetch(`https://interviewprep-ai-77at.onrender.com/questions?skill=${encodeURIComponent(skillName)}`,{
-//       headers:{"auth":"bearer "+token}
-//     });
-//     if (!res.ok) throw new Error("Failed to load questions");
-//     // if (!res.ok) throw new Error("Failed to load skills");
-
-//     const data1 = await res.json();
-
-//     if(data1.status!="Ok"){
-//         alert("Login Again")
-//         // console.log("Login again")
-//         window.location.href="HomePage.html"
-//         return;
-//     }
-
-//     console.log(data1)
-//     const data=data1.questions
-// //     const data =[
-// //   "What is JavaScript?",
-// //   "Explain closures in JavaScript.",
-// //   "What is event bubbling?"
-// // ]
-
-//     if (!data || data.length === 0) {
-//       skillContent.innerHTML = `<p>No questions found for ${skillName}.</p>`;
-//       return;
-//     }
-
-//     skillContent.innerHTML = `
-//       <h3>${skillName} Questions</h3>
-//       <ul style="list-style:none;">${data.map((q,i) => `<li class="question_list">Q.${i+1} ${q}</li>`).join("")}</ul>
-//     `;
-//   } catch (error) {
-//     console.error(error);
-//     skillContent.innerHTML = `<p>Error loading questions.</p>`;
-//   }
-// }
-
-// // === INITIAL LOAD ===
-// fetchSkills();
-
-
-// // === DYNAMIC PROJECTS (Static Example) ===
-// // You can later connect these to your backend if needed
-// const projects = [
-//   {
-//     name: "Exam Management App",
-//     questions: [
-//       "How does the login system work?",
-//       "Explain how you used SQLite database.",
-//       "How are roles (Student, Teacher, Admin) managed?"
-//     ]
-//   },
-//   {
-//     name: "Flappy Bird Game",
-//     questions: [
-//       "Which library did you use for rendering?",
-//       "How do you handle collisions?",
-//       "How is the score maintained?"
-//     ]
-//   },
-//   {
-//     name: "AgroBot V2",
-//     questions: [
-//       "Which sensors are used for soil moisture detection?",
-//       "How does the robot decide when to water crops?",
-//       "Explain how autonomous movement is achieved."
-//     ]
-//   }
-// ];
-
-// const projectList = document.getElementById("projectList");
-// const projectContent = document.getElementById("projectContent");
-
-// projects.forEach((project) => {
-//   const li = document.createElement("li");
-//   li.classList.add("project-item");
-//   li.textContent = project.name;
-
-//   li.addEventListener("click", () => {
-//     document.querySelectorAll(".project-item").forEach(el => el.classList.remove("active"));
-//     li.classList.add("active");
-
-//     projectContent.innerHTML = `
-//       <h3>${project.name} Related Questions</h3>
-//       <ul>${project.questions.map(q => `<li>${q}</li>`).join("")}</ul>
-//     `;
-//   });
-
-//   projectList.appendChild(li);
-// });
-const API_URL = "https://interviewprep-ai-77at.onrender.com"; // change to your Render URL after deploying
-
-// --- TAB SWITCHING (Skill / Project / Company) ---
 const tabs = document.querySelectorAll(".tab");
 const sections = document.querySelectorAll(".prep-section");
 
@@ -170,142 +27,341 @@ tabs.forEach((tab, index) => {
   tab.addEventListener("click", () => {
     tabs.forEach(t => t.classList.remove("active"));
     sections.forEach(s => s.classList.remove("active"));
+
     tab.classList.add("active");
-    sections[index].classList.add("active");
+
+    if (sections[index]) {
+      sections[index].classList.add("active");
+    }
   });
 });
 
-// === ELEMENTS ===
-const skillList = document.getElementById("skillList");
-const skillContent = document.getElementById("skillContent");
+// ================================
+// COMMON API HELPER
+// ================================
 
-// FETCH SKILLS FROM API
-async function fetchSkills() {
-  let token = localStorage.getItem("token")
+async function getJson(path) {
+  if (!token) {
+    throw new Error("Please log in first.");
+  }
+
+  const response = await fetch(API_URL + path, {
+    method: "GET",
+    headers: authHeaders
+  });
+
+  let data;
+
   try {
-    const res = await fetch(API_URL + "/skills", {
-      headers: { "auth": "bearer " + token }
-    });
-    if (!res.ok) throw new Error("Failed to load skills");
-    const data = await res.json();
-    const skills = data.skills
+    data = await response.json();
+  } catch (error) {
+    throw new Error("Invalid server response.");
+  }
 
-    if (data.status != "Ok") {
-      alert("Login Again")
-      window.location.href = "HomePage.html"
-      return
-    }
+  if (response.status === 401) {
+    localStorage.removeItem("token");
+    alert("Your session has expired. Please login again.");
+    window.location.href = "HomePage.html";
+    throw new Error("Session expired");
+  }
 
-    skillList.innerHTML = "";
+  if (!response.ok || data.status !== "Ok") {
+    throw new Error(data.message || "Request failed");
+  }
 
-    if (!skills || skills.length === 0) {
-      skillList.innerHTML = `<p>No skills found.</p>`;
+  return data;
+}
+
+// ================================
+// DISPLAY MESSAGE SAFELY
+// ================================
+
+function setMessage(element, message) {
+  if (!element) return;
+
+  element.replaceChildren();
+
+  const p = document.createElement("p");
+  p.textContent = message;
+
+  element.appendChild(p);
+}
+
+// ================================
+// DISPLAY GENERATED QUESTIONS
+// ================================
+
+function renderQuestions(element, title, questions) {
+  if (!element) return;
+
+  element.replaceChildren();
+
+  const heading = document.createElement("h3");
+  heading.textContent = title;
+
+  element.appendChild(heading);
+
+  if (!Array.isArray(questions) || questions.length === 0) {
+    const p = document.createElement("p");
+    p.textContent = "No questions available.";
+    element.appendChild(p);
+    return;
+  }
+
+  const list = document.createElement("ul");
+  list.style.listStyle = "none";
+  list.style.padding = "0";
+
+  questions.forEach((item, index) => {
+    const li = document.createElement("li");
+
+    li.className = "question_list";
+
+    const question =
+      typeof item === "string"
+        ? item
+        : item.question || "Question unavailable";
+
+    li.textContent = `Q.${index + 1} ${question}`;
+
+    list.appendChild(li);
+  });
+
+  element.appendChild(list);
+}
+
+// ================================
+// FETCH TECHNICAL SKILLS
+// ================================
+
+async function fetchSkills() {
+  const skillList = document.getElementById("skillList");
+  const companyList = document.getElementById("companySkillList");
+
+  if (!skillList || !companyList) {
+    console.error("Required skill containers are missing.");
+    return;
+  }
+
+  setMessage(skillList, "Loading technical skills...");
+  setMessage(companyList, "Loading company preparation skills...");
+
+  try {
+    const data = await getJson("/skills");
+
+    const skills = Array.isArray(data.skills)
+      ? data.skills
+      : [];
+
+    skillList.replaceChildren();
+    companyList.replaceChildren();
+
+    if (skills.length === 0) {
+      setMessage(
+        skillList,
+        "No skills found. Please upload your resume first."
+      );
+
+      setMessage(
+        companyList,
+        "No technical skills available."
+      );
+
       return;
     }
 
     skills.forEach(skill => {
+      // -------------------------
+      // SKILL-BASED PREPARATION
+      // -------------------------
+
       const li = document.createElement("li");
-      li.classList.add("skill-item");
-      li.textContent = skill.name || skill;
+
+      li.className = "skill-item";
+      li.textContent = skill;
 
       li.addEventListener("click", () => {
-        document.querySelectorAll(".skill-item").forEach(el => el.classList.remove("active"));
+        skillList.querySelectorAll("li").forEach(item => {
+          item.classList.remove("active");
+        });
+
         li.classList.add("active");
-        fetchQuestions(li.textContent);
+
+        fetchQuestions(
+          skill,
+          "skill",
+          document.getElementById("skillContent")
+        );
       });
 
       skillList.appendChild(li);
+
+      // -------------------------
+      // COMPANY-SPECIFIC PREPARATION
+      // -------------------------
+
+      const button = document.createElement("button");
+
+      button.type = "button";
+      button.className = "company-skill-btn";
+      button.textContent = skill;
+
+      button.addEventListener("click", () => {
+        companyList.querySelectorAll("button").forEach(item => {
+          item.classList.remove("active");
+        });
+
+        button.classList.add("active");
+
+        fetchQuestions(
+          skill,
+          "company",
+          document.getElementById("companyContent")
+        );
+      });
+
+      companyList.appendChild(button);
     });
+
   } catch (error) {
-    console.error(error);
-    skillList.innerHTML = `<p>Error loading skills.</p>`;
+    console.error("Skill loading error:", error);
+
+    setMessage(skillList, error.message);
+    setMessage(companyList, error.message);
   }
 }
 
-// FETCH QUESTIONS FOR SELECTED SKILL
-async function fetchQuestions(skillName) {
-  let token = localStorage.getItem("token")
+// ================================
+// FETCH SKILL / COMPANY QUESTIONS
+// ================================
+
+async function fetchQuestions(skill, mode, target) {
+  if (!target) return;
+
+  setMessage(target, "Generating interview questions...");
+
   try {
-    skillContent.innerHTML = `<p>Loading questions for <b>${skillName}</b>...</p>`;
+    const url =
+      `/questions?skill=${encodeURIComponent(skill)}` +
+      `&mode=${encodeURIComponent(mode)}`;
 
-    const res = await fetch(`${API_URL}/questions?skill=${encodeURIComponent(skillName)}`, {
-      headers: { "auth": "bearer " + token }
-    });
-    if (!res.ok) throw new Error("Failed to load questions");
+    const data = await getJson(url);
 
-    const data1 = await res.json();
+    const title =
+      mode === "company"
+        ? `${skill} - Company-Specific Interview Questions`
+        : `${skill} - Technical Interview Questions`;
 
-    if (data1.status != "Ok") {
-      alert("Login Again")
-      window.location.href = "HomePage.html"
-      return;
-    }
+    renderQuestions(
+      target,
+      title,
+      data.questions
+    );
 
-    const data = data1.questions
-
-    if (!data || data.length === 0) {
-      skillContent.innerHTML = `<p>No questions found for ${skillName}.</p>`;
-      return;
-    }
-
-    skillContent.innerHTML = `
-      <h3>${skillName} Questions</h3>
-      <ul style="list-style:none;">${data.map((q, i) => `<li class="question_list">Q.${i + 1} ${q}</li>`).join("")}</ul>
-    `;
   } catch (error) {
-    console.error(error);
-    skillContent.innerHTML = `<p>Error loading questions.</p>`;
+    console.error("Question generation error:", error);
+    setMessage(target, error.message);
   }
 }
 
-// === INITIAL LOAD ===
-fetchSkills();
+// ================================
+// FETCH RESUME PROJECTS
+// ================================
 
-// === DYNAMIC PROJECTS (Static Example) ===
-const projects = [
-  {
-    name: "Exam Management App",
-    questions: [
-      "How does the login system work?",
-      "Explain how you used SQLite database.",
-      "How are roles (Student, Teacher, Admin) managed?"
-    ]
-  },
-  {
-    name: "Flappy Bird Game",
-    questions: [
-      "Which library did you use for rendering?",
-      "How do you handle collisions?",
-      "How is the score maintained?"
-    ]
-  },
-  {
-    name: "AgroBot V2",
-    questions: [
-      "Which sensors are used for soil moisture detection?",
-      "How does the robot decide when to water crops?",
-      "Explain how autonomous movement is achieved."
-    ]
+async function fetchProjects() {
+  const projectList = document.getElementById("projectList");
+  const projectContent = document.getElementById("projectContent");
+
+  if (!projectList || !projectContent) {
+    console.error("Required project containers are missing.");
+    return;
   }
-];
 
-const projectList = document.getElementById("projectList");
-const projectContent = document.getElementById("projectContent");
+  setMessage(projectList, "Loading your projects...");
 
-projects.forEach((project) => {
-  const li = document.createElement("li");
-  li.classList.add("project-item");
-  li.textContent = project.name;
+  try {
+    const data = await getJson("/projects");
 
-  li.addEventListener("click", () => {
-    document.querySelectorAll(".project-item").forEach(el => el.classList.remove("active"));
-    li.classList.add("active");
+    projectList.replaceChildren();
 
-    projectContent.innerHTML = `
-      <h3>${project.name} Related Questions</h3>
-      <ul>${project.questions.map(q => `<li>${q}</li>`).join("")}</ul>
-    `;
-  });
+    const projects = Array.isArray(data.projects)
+      ? data.projects
+      : [];
 
-  projectList.appendChild(li);
-});
+    if (projects.length === 0) {
+      setMessage(
+        projectList,
+        "No projects found. Please upload your resume again."
+      );
+
+      setMessage(
+        projectContent,
+        "Your resume projects will appear here."
+      );
+
+      return;
+    }
+
+    projects.forEach((project, index) => {
+      const li = document.createElement("li");
+
+      li.className = "project-item";
+      li.textContent = project.name;
+
+      li.addEventListener("click", async () => {
+        projectList.querySelectorAll("li").forEach(item => {
+          item.classList.remove("active");
+        });
+
+        li.classList.add("active");
+
+        setMessage(
+          projectContent,
+          "Generating project-specific questions..."
+        );
+
+        try {
+          const result = await getJson(
+            `/project-questions?index=${index}`
+          );
+
+          renderQuestions(
+            projectContent,
+            `${project.name} - Project Interview Questions`,
+            result.questions
+          );
+
+        } catch (error) {
+          console.error(
+            "Project question generation error:",
+            error
+          );
+
+          setMessage(
+            projectContent,
+            error.message
+          );
+        }
+      });
+
+      projectList.appendChild(li);
+    });
+
+  } catch (error) {
+    console.error("Project loading error:", error);
+
+    setMessage(
+      projectList,
+      error.message
+    );
+  }
+}
+
+// ================================
+// INITIALIZE APPLICATION
+// ================================
+
+if (token) {
+  fetchSkills();
+  fetchProjects();
+}

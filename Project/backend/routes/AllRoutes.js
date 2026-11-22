@@ -1,77 +1,74 @@
-// const express=require("express")
-// const jwt=require("jsonwebtoken")
-
-// let {RegisterHandel}=require("../controller/HandelRegister")
-// let {GetSkills}=require("../controller/GetSkills")
-// let {GetQuestions}=require("../controller/GetQuestions")
-// let {LoginHandel,validate}=require("../controller/HandelLogin")
-// let {GenerateQuestions,upload}=require("../controller/GenerateQuestions")
-
-// let router=express.Router()
-// const secret="MySecretKey"
-
-// async function verifyRoute(req,res,next) {
-//     let auth_header = req.headers["auth"].split(" ")
-//     let token=auth_header[1]
-
-//     jwt.verify(token,secret,(error,payload)=>{
-//         if(error){
-//             res.json({status:"Invalid"})
-//             return
-//         }
-        
-//         req.user=payload
-//         next()
-//     })
-// }
-
-// router.post("/register",RegisterHandel)
-// router.post("/login",LoginHandel)
-// router.get("/validate",verifyRoute,validate)
-// router.post("/generate",verifyRoute,upload.single("resume"),GenerateQuestions)
-// router.get("/skills",verifyRoute,GetSkills)
-// router.get("/questions",verifyRoute,GetQuestions)
 
 
+const express = require("express");
+const jwt = require("jsonwebtoken");
 
-// module.exports={
-//     router,
-// }
+const { RegisterHandel } = require("../controller/HandelRegister");
+const { GetSkills } = require("../controller/GetSkills");
+const { GetQuestions } = require("../controller/GetQuestions");
+const { GetProjects, GetProjectQuestions } = require("../controller/GetProjects");
+const { LoginHandel, validate } = require("../controller/HandelLogin");
+const { GenerateQuestions, upload } = require("../controller/GenerateQuestions");
 
-const express = require("express")
-const jwt = require("jsonwebtoken")
+const router = express.Router();
 
-let { RegisterHandel } = require("../controller/HandelRegister")
-let { GetSkills } = require("../controller/GetSkills")
-let { GetQuestions } = require("../controller/GetQuestions")
-let { LoginHandel, validate } = require("../controller/HandelLogin")
-let { GenerateQuestions, upload } = require("../controller/GenerateQuestions")
+function verifyRoute(req, res, next) {
+  const header =
+    req.get("auth") ||
+    req.get("authorization") ||
+    "";
 
-let router = express.Router()
-const secret = process.env.JWT_SECRET || "dev-secret-change-me"
+  const match = header.match(/^Bearer\s+(.+)$/i);
 
-async function verifyRoute(req, res, next) {
-    let header = req.headers["auth"]
-    if (!header) return res.json({ status: "Invalid" })
-    let token = header.split(" ")[1]
+  if (!match) {
+    return res.status(401).json({
+      status: "Invalid",
+      message: "Authentication token required"
+    });
+  }
 
-    jwt.verify(token, secret, (error, payload) => {
-        if (error) {
-            res.json({ status: "Invalid" })
-            return
-        }
-        req.user = payload
-        next()
-    })
+  try {
+    const payload = jwt.verify(
+      match[1],
+      process.env.JWT_SECRET
+    );
+
+    req.user = payload;
+    next();
+
+  } catch (err) {
+    return res.status(401).json({
+      status: "Invalid",
+      message: "Invalid or expired token"
+    });
+  }
 }
 
-router.post("/register", RegisterHandel)
-router.post("/login", LoginHandel)
-router.get("/validate", verifyRoute, validate)
-router.post("/generate", verifyRoute, upload.single("resume"), GenerateQuestions)
-router.get("/skills", verifyRoute, GetSkills)
-router.get("/questions", verifyRoute, GetQuestions)
+// Authentication
+router.post("/register", RegisterHandel);
+router.post("/login", LoginHandel);
+router.get("/validate", verifyRoute, validate);
+
+// Resume analysis
+router.post(
+  "/generate",
+  verifyRoute,
+  upload.single("resume"),
+  GenerateQuestions
+);
+
+// Skill preparation
+router.get("/skills", verifyRoute, GetSkills);
+router.get("/questions", verifyRoute, GetQuestions);
+
+// Project preparation
+router.get("/projects", verifyRoute, GetProjects);
+router.get(
+  "/project-questions",
+  verifyRoute,
+  GetProjectQuestions
+);
 
 module.exports = {
-    router,
-}
+  router
+};
